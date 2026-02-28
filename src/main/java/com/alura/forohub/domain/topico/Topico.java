@@ -20,10 +20,10 @@ public class Topico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank // Mejora 3: ¡El guardia no deja pasar títulos vacíos!
+    @NotBlank
     private String titulo;
 
-    @NotBlank // Mejora 3: El mensaje también debe tener letras
+    @NotBlank
     private String mensaje;
 
     private LocalDateTime fechaCreacion = LocalDateTime.now();
@@ -34,10 +34,41 @@ public class Topico {
     private String autor;
     private String curso;
 
-    // Mejora 1: El semáforo de importancia (Urgente, Normal, Baja)
-    private String prioridad = "NORMAL";
+    // Campos adicionales que añadiste a tu tabla [cite: 2026-02-25]
+    private String categoria;
+    private String etiquetas;
+    private Integer prioridad;
 
-    // Mejora 2: El contador de cuántas personas leyeron el mensaje
+    // Mejora 2: El contador de visualizaciones
     private Integer visualizaciones = 0;
 
+
+    public Topico(DatosRegistroTopico datos) {
+        this.titulo = datos.titulo();
+        this.mensaje = datos.mensaje();
+        this.autor = datos.autor();
+        this.curso = datos.curso();
+        this.categoria = datos.categoria();
+        this.prioridad = datos.prioridad();
+        this.etiquetas = datos.etiquetas();
+        this.fechaCreacion = LocalDateTime.now();
+        this.status = StatusTopico.NO_RESPONDIDO;
+    }
+    public void actualizarDatos(DatosActualizacionTopico datos) {
+        if (datos.titulo() != null) {
+            this.titulo = datos.titulo();
+        }
+        if (datos.mensaje() != null) {
+            this.mensaje = datos.mensaje();
+        }
+        if (datos.categoria() != null) {
+            this.categoria = datos.categoria();
+        }
+        if (datos.prioridad() != null) {
+            this.prioridad = datos.prioridad();
+        }
+        if (datos.etiquetas() != null) {
+            this.etiquetas = datos.etiquetas();
+        }
+    }
 }
