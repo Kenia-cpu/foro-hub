@@ -35,3 +35,14 @@ A diferencia del requerimiento base, he enriquecido la entidad con:
 1. Clonar el repositorio.
 2. Configurar las variables de entorno para la base de datos PostgreSQL en `application.properties`.
 3. Ejecutar `mvn spring-boot:run`.
+
+## 🔐 Seguridad y Autenticación
+La API implementa un modelo de seguridad **Stateless** con **Spring Security** y **JWT**:
+* **Autenticación:** Endpoint `/login` que valida credenciales y retorna un token.
+* **Autorización:** Uso de un `SecurityFilter` para validar el token Bearer en cada petición protegida.
+* **Protección de Rutas:** Solo los usuarios autenticados pueden interactuar con los tópicos.
+
+## 🛡️ Tratamiento de Errores
+Se implementó un `RestControllerAdvice` para estandarizar las respuestas de error:
+* **404 Not Found:** Cuando un recurso (como un tópico por ID) no existe.
+* **400 Bad Request:** Cuando los datos enviados no cumplen con las validaciones de negocio.
